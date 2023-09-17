@@ -88,6 +88,12 @@ export default function MenuAppBar() {
             open={Boolean(navAnchorEl)}
             onClose={handleNavClose}
           >
+            <MenuItem onClick={() => {
+              push("/events");
+            }}
+              >
+                Events
+              </MenuItem>
             <MenuItem
               onClick={() => {
                 push("/dashboard");
