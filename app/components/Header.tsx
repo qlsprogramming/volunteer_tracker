@@ -88,12 +88,6 @@ export default function MenuAppBar() {
             open={Boolean(navAnchorEl)}
             onClose={handleNavClose}
           >
-            <MenuItem onClick={() => {
-              push("/events");
-            }}
-              >
-                Events
-              </MenuItem>
             <MenuItem
               onClick={() => {
                 push("/dashboard");
@@ -101,6 +95,12 @@ export default function MenuAppBar() {
             >
               Dashboard
             </MenuItem>
+            <MenuItem onClick={() => {
+              push("/events");
+            }}
+              >
+                Events
+              </MenuItem>
             {session?.user?.role?.includes("ADMIN") && (
               <MenuItem
                 onClick={() => {
