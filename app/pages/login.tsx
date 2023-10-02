@@ -70,7 +70,7 @@ export default function Login() {
         spacing={2}
         direction="column"
       >
-        <Typography variant="h5">CSF Volunteering</Typography>
+        <Typography variant="h5">FRC 7419 Volunteering</Typography>
         <form onSubmit={handleSubmit}>
           <Box sx={{ display: "flex", alignItems: "flex-end", width: 1 }}>
             <AccountCircle sx={{ color: "action.active", mr: 1, my: 0.5 }} />

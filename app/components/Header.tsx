@@ -116,7 +116,7 @@ export default function MenuAppBar() {
           </Menu>
 
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            CSF Volunteering
+            FRC 7419 Volunteering
           </Typography>
           <div>
             <Tooltip title="Account">
