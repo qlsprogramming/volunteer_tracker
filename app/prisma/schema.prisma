@@ -21,6 +21,7 @@ model User {
   name  String
   password String?
   role  Role    @default(USER)
+  status String @default("")
   hours Hour[]
 }
 
@@ -33,7 +34,11 @@ model Hour {
   name               String
   description        String
   supervisor_name    String
+  subLeadName        String
+  subLeadContact     String
   supervisor_contact String
+  reviewedBySubLead  Boolean @default(false)
+  status             String @default("")
   approved Boolean @default(false)
 }
 
