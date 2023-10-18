@@ -21,20 +21,30 @@ model User {
   name  String
   password String?
   role  Role    @default(USER)
-  hours Hour[]
+  hours ShopHour[]
+  meetings Meeting[]
 }
 
-model Hour {
+model Meeting {
+  id String @id @default(uuid())
+  name String
+  date DateTime
+  hours Decimal
+  code String
+  attendees User[]
+}
+
+model ShopHour {
   id                 String   @id @default(uuid())
   user               User     @relation(fields: [userId], references: [id])
   userId             String
-  hours Int
+  hours              Decimal
   date               DateTime
   name               String
   description        String
   supervisor_name    String
   supervisor_contact String
-  approved Boolean @default(false)
+  approved           Boolean  @default(false)
 }
 
 model Session {
