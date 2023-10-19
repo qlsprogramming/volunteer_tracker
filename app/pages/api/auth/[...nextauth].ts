@@ -22,12 +22,13 @@ export const authOptions = {
             email: email,
           },
         });
+        console.log(user)
 
         if (user == null || user.password == null)
           throw new Error("Incorrect Email/Password");
 
-        const isValid = await bcrypt.compare(password, user.password);
-        if (!isValid) throw new Error("Incorrect Email/Password");
+        const isValid = await bcrypt.compare(user.password, password);
+        if (!isValid) throw new Error("Incorrect Password");
         return {
           id: user.id,
           email: user.email,

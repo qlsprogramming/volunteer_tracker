@@ -15,7 +15,7 @@ export default async function handler(
 
   try {
     const data: any = await jwt.verify(token, process.env.JWT_SECRET as string);
-    await prisma.hour.update({
+    await prisma.shopHour.update({
       where: {
         id: data.hourid,
       },

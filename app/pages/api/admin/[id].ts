@@ -30,7 +30,7 @@ export default async function handler(
         },
       });
     }
-    const result = await prisma.hour.create({
+    const result = await prisma.shopHour.create({
       data: {
         date: req.body.date,
         hours: req.body.hours,
@@ -54,7 +54,7 @@ export default async function handler(
   }
 
   if (req.method === "DELETE") {
-    await prisma.hour.delete({
+    await prisma.shopHour.delete({
       where: {
         id: req.query.id as string,
       },
@@ -81,7 +81,7 @@ export default async function handler(
       });
     }
 
-    await prisma.hour.update({
+    await prisma.shopHour.update({
       where: {
         id: req.query.id as string,
       },

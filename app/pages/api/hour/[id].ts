@@ -16,7 +16,7 @@ export default async function handler(
 
   if (req.method !== "DELETE") return res.status(400).json({ message: "Oops" });
 
-  await prisma.hour.delete({
+  await prisma.shopHour.delete({
     where: {
       id: req.query.id as string,
     },

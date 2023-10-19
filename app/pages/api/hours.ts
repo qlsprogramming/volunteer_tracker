@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (req.method !== "GET") return res.status(400).json({message: "Oops"})
 
-  const hours = await prisma.hour.findMany({
+  const hours = await prisma.shopHour.findMany({
     where: {
       userId: session.user!.id
     }

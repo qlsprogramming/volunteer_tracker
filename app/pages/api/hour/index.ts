@@ -32,7 +32,7 @@ export default async function handler(
     });
   }
 
-  const result = await prisma.hour.create({
+  const result = await prisma.shopHour.create({
     data: {
       date: req.body.date,
       hours: req.body.hours,
