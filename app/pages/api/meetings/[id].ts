@@ -27,7 +27,7 @@ export default async function handler(
   if (meeting == null) return res.status(400).json({message: "Incorrect Meeting Code"})
   if (meeting?.code !== submitted_code) return res.status(400).json({ message: "Bad code"})
   
-  const user = await prisma.user.update({
+  await prisma.user.update({
     where: {
         id: session.user!.id
     },
