@@ -14,9 +14,15 @@ export default async function handler(
     return;
   }
 
-  if (session.user?.role !== "ADMIN")
-    return res.status(401).json({ message: "You must be an admin." });
-  else {
+  if (session.user?.role !== "ADMIN") {
+    const meeting_id = req.query.meetingid as string;
+    const meeting = await prisma.meeting.findFirst({
+      where: {
+        id: meeting_id,
+      },
+    });
+    return res.status(200).json({ meeting });
+  } else {
     if (req.method !== "GET") {
       const meeting_id = req.query.meetingid as string;
       let meeting = await prisma.meeting.findFirst({
