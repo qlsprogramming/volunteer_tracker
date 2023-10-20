@@ -10,29 +10,16 @@ import Alert from "@mui/material/Alert";
 import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 
 export default function Login() {
-  const { toggleTheme } = useTheme();
-  const [open, setOpen] = useState(false);
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { push } = useRouter();
+  const [message, setMessage] = useState("");
 
-  const { status } = useSession();
-
-  useEffect(() => {
-    if (status == "authenticated") push("/dashboard");
-  }, [status]);
-
-  const handleClose = (event: any, reason: string) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
-  };
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [values, setValues] = useState({
-    email: "",
     password: "",
   });
 
@@ -42,17 +29,23 @@ export default function Login() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    setOpen(false);
     setLoading(true);
-    setError("");
-    signIn("credentials", {
-      redirect: false,
-      email: values.email,
-      password: values.password,
+    setMessage("");
+    fetch(`/api/pwreset/${searchParams.get("key")}`, {
+      method: "POST",
+      body: JSON.stringify({
+        password: values.password
+      }),
+      headers: {
+        "content-type": "application/json",
+      }
     }).then((resp) => {
-      if (resp?.error) {
-        setError(resp.error);
-        setOpen(true);
+      if (!resp.ok) setMessage("Invalid token");
+      else {
+        setMessage("Password successfully set. Redirecting...")
+        setTimeout(function() {
+          router.push('/login')
+        }, 3000)
       }
       setLoading(false);
     });
@@ -70,19 +63,8 @@ export default function Login() {
         spacing={2}
         direction="column"
       >
-        <Typography variant="h5">FRC 7419 Attendance</Typography>
+        <Typography variant="h5">CSF Password Reset</Typography>
         <form onSubmit={handleSubmit}>
-          <Box sx={{ display: "flex", alignItems: "flex-end", width: 1 }}>
-            <AccountCircle sx={{ color: "action.active", mr: 1, my: 0.5 }} />
-            <TextField
-              id="email"
-              label="Email"
-              value={values.email}
-              onChange={handleChange("email")}
-              variant="standard"
-              fullWidth
-            />
-          </Box>
           <Box sx={{ display: "flex", alignItems: "flex-end" }}>
             <VpnKeyIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
             <TextField
@@ -95,28 +77,20 @@ export default function Login() {
               fullWidth
             />
           </Box>
+          <Typography variant="h6" color="primary" align="center">
+            {message}
+          </Typography>
+          <br />
           <Button
             type="submit"
             variant="contained"
             disabled={loading}
-            sx={{ mt: 5, px: "32px", py: "10px" }}
+            sx={{ mt: 0, px: "32px", py: "10px" }}
           >
-            Log In
+            Reset Password
           </Button>
         </form>
       </Grid>
-      {error && (
-        <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-          <Alert
-            // onClose={handleClose}
-            severity="error"
-            elevation={6}
-            variant="filled"
-          >
-            {error}
-          </Alert>
-        </Snackbar>
-      )}
     </Grid>
   );
 }

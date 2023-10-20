@@ -27,7 +27,7 @@ export const authOptions = {
         if (user == null || user.password == null)
           throw new Error("Incorrect Email/Password");
 
-        const isValid = await bcrypt.compare(user.password, password);
+        const isValid = await bcrypt.compare(password, user.password);
         if (!isValid) throw new Error("Incorrect Password");
         return {
           id: user.id,

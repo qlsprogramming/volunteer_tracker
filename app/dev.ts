@@ -1,12 +1,12 @@
-import prisma from "@/lib/prisma";
-import { mailer } from "@/lib/mailer";
+import prisma from "./lib/prisma";
+import { mailer } from "./lib/mailer";
 import jwt from "jsonwebtoken";
 
 // get dot vars
+require('dotenv').config()
 
 const data = [
-  { name: "test", email: "test@test.com" },
-  { name: "test2", email: "bozo@gmail.com" },
+  { name: "ok boomer", email: "edoc.www@gmail.com" },
 ];
 
 async function main() {
@@ -22,8 +22,12 @@ async function main() {
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET as string, {
       expiresIn: "30d",
     });
+    const url =
+    (process.env.SERVER_URL || "http://localhost:3000") +
+    "/pwreset?key=" +
+    token
 const resp = await mailer.sendMail({
-    from: `CSF Volunteer Tracking <${process.env.MAIL_USERNAME as string}>`,
+    from: `7419 Attendance Tracking <${process.env.MAIL_USERNAME as string}>`,
     to: user.email,
     subject: `Password Reset for ${user.name}`,
     text: `\
@@ -31,10 +35,10 @@ Hello, I hope you are having a great day!
 
 Please click on the link below to reset your password
 
-// TOODLES
+${url}
 
 Sincerely,
-Quarry Lane California Scholarship Federation
+Tech Support
   `,
   });
 
