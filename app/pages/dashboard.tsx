@@ -70,13 +70,10 @@ export default function Dashboard() {
 
   useEffect(() => {
     (async function () {
-      const response = await fetch(
-        `/api/hours`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`/api/hours`, {
+        method: "GET",
+        credentials: "include",
+      });
       const hours = await response.json();
       console.log(hours);
       setData(hours);
@@ -109,7 +106,7 @@ export default function Dashboard() {
       <Header />
       <Container>
         <Box component="main" sx={{ p: 3 }}>
-          <Card sx={{ minWidth: 275, marginTop: 2, marginBottom: 2 }}>
+          {/* <Card sx={{ minWidth: 275, marginTop: 2, marginBottom: 2 }}>
             <CardContent>
               <Typography variant="h6" gutterBottom>
                 Progress
@@ -127,7 +124,7 @@ export default function Dashboard() {
                 {(totalHours / REQUIRED_HOURS) * 100}%)
               </Typography>
             </CardContent>
-          </Card>
+          </Card> */}
           <MaterialTable
             data={data.filter((hour) => hour.approved === false)}
             isLoading={isLoading}

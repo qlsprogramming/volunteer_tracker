@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 require('dotenv').config()
 
 const data = [
-  { name: "ok boomer", email: "edoc.www@gmail.com" },
+  { name: "ok boomer", email: "veerrohitv08@gmail.com" },
 ];
 
 async function main() {

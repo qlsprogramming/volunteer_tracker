@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { authOptions } from "../auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
-import  prisma from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 import { hourSchema } from "@/lib/schemas";
 import { mailer } from "@/lib/mailer";
 import jwt from "jsonwebtoken";

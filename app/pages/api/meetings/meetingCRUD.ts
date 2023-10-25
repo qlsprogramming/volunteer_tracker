@@ -15,7 +15,7 @@ export default async function handler(
   }
 
   if (session.user?.role !== "ADMIN") {
-    const meeting_id = req.query.meetingid as string;
+    const meeting_id = req.body.meetingid as string;
     const meeting = await prisma.meeting.findFirst({
       where: {
         id: meeting_id,
