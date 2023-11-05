@@ -16,8 +16,7 @@ export default async function handler(
 
   if (session.user?.role !== "ADMIN")
     return res.status(401).json({ message: "You must be an admin." });
-  else {
-    if (req.method !== "GET") return res.status(400).json({ message: "Oops" });
+    if (req.method !== "POST") return res.status(400).json({ message: "Oops" });
 
     const { name, date, hours, code } = req.body;
 
@@ -31,5 +30,4 @@ export default async function handler(
     });
 
     res.status(200).json(newMeeting);
-  }
 }

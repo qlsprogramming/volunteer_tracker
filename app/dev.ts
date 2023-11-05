@@ -10,9 +10,17 @@ const data = [
 ];
 
 async function main() {
+	/*
   await prisma.user.createMany({
     data: data,
   });
+  */
+ await prisma.user.create({
+  data: {
+    name: data[0].name,
+    email: data[0].email
+  }
+ })
   const users = await prisma.user.findMany({
     where: {
       email: { in: data.map((e) => e.email) },
