@@ -8,3 +8,10 @@ export const hourSchema = z.object({
     supervisor_name: z.string(),
     supervisor_contact: z.string()
 })
+
+export const meetingSchema = z.object({
+    date: z.preprocess( arg => typeof arg == 'string' ? new Date( arg ) : undefined, z.date() ),
+    name: z.string(),
+    hours: z.number(),
+    code: z.string(),
+})

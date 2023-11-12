@@ -22,5 +22,6 @@ interface User {
   id: string;
   name: string;
   hours: Hour[];
+  meetings: Meeting[];
 }
 

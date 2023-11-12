@@ -21,6 +21,7 @@ export default async function handler(
   const hours = await prisma.user.findMany({
     include: {
       hours: true,
+      meetings: true
     },
   });
   res.json(hours);

@@ -13,8 +13,16 @@ export default async function handler(
     res.status(401).json({ message: "You must be logged in." });
     return;
   }
+  const meetings = await prisma.meeting.findMany({
+    where: {
+      attendees: {
+        none: {
+          id: session.user!.id,
+        },
+      },
+    },
+  })
 
-  const meetings = await prisma.meeting.findMany();
   // TODO: fix filter and remove code
 //   const filtered_meetings = meetings.filter((m) => m.date)
   return res.status(200).json(meetings);

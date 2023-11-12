@@ -14,35 +14,27 @@ export default async function handler(
     return;
   }
 
-  const { user_id, type_meeting } = req.body;
-  const user = await prisma.user.findOne({
-    where: {
-      id: user_id,
-    },
-  });
-
-  let meetings;
-  if (type_meeting === "notattended") {
-    meetings = await prisma.meeting.findMany({
-      where: {
-        attendees: {
-          none: {
-            id: user_id,
-          },
-        },
-      },
-    });
-    return res.status(200).json({ meetings });
-  } else {
-    meetings = await prisma.meeting.findMany({
+  // if (type_meeting === "notattended") {
+  //   meetings = await prisma.meeting.findMany({
+  //     where: {
+  //       attendees: {
+  //         none: {
+  //           id: user_id,
+  //         },
+  //       },
+  //     },
+  //   });
+  //   return res.status(200).json({ meetings });
+  // } else {
+    const meetings = await prisma.meeting.findMany({
       where: {
         attendees: {
           some: {
-            id: user_id,
+            id: session.user!.id,
           },
         },
       },
     });
     return res.status(200).json({ meetings });
-  }
+  // }
 }

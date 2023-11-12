@@ -18,12 +18,15 @@ export default async function handler(
 
   const { meeting_id, code } = req.body;
 
-  const meeting = await prisma.meeting.findFirst({
+  if (meeting_id == null || code == null) return res.status(400).json({message: "Missing Meeting Name/Code"})
+
+  const meeting = await prisma.meeting.findUnique({
     where: {
       id: meeting_id,
     },
   });
 
+  console.log(meeting)
   if (meeting == null) return res.status(404).json({ message: "Ooops" });
   if (code !== meeting.code)
     return res.status(400).json({ message: "Incorrect Code" });

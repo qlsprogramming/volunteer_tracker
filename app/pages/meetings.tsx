@@ -47,10 +47,11 @@ const EDITABLE_COLUMNS: Column<Meeting>[] = [
 
 export default function Dashboard() {
   const [data, setData] = useState<Meeting[]>([]);
+  const [openMeetings, setOpenMeetings] = useState<Meeting[]>([])
+
   const [meetingId, setMeetingId] = useState();
   const [code, setCode] = useState();
   const [message, setMessage] = useState("");
-  const [openMeetings, setOpenMeetings] = useState([])
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -64,28 +65,35 @@ export default function Dashboard() {
       setMessage("")
       const response = await fetch(`/api/meeting/verifymeeting`, {
         method: "POST",
-        credentials: "include"
+        credentials: "include",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          meeting_id: meetingId,
+          code: code
+        })
       })
       const r = await response.json();
       setMessage(r.message)
       if (r.ok) {
         setData([...data, r.data]);
       }
-    })
+    })()
   }
 
   useEffect(() => {
     (async function () {
-      const response = await fetch(`/api/hours`, {
+      const response = await fetch(`/api/meeting/getusermeetings`, {
         method: "GET",
         credentials: "include",
       });
-      const hours = await response.json();
-      console.log(hours);
-      setData(hours);
+      const {meetings}= await response.json();
+      console.log(meetings);
+      setData(meetings);
       setIsLoading(false);
     })();
-  }, []);
+  }, [message]);
 
   useEffect(() => {
     (async function () {
@@ -97,7 +105,7 @@ export default function Dashboard() {
       console.log(openmeetings);
       setOpenMeetings(openmeetings);
     })();
-  }, []);
+  }, [message]);
 
   return (
     <>
@@ -135,7 +143,7 @@ export default function Dashboard() {
                   <TextField value={code} onChange={(e: any) => {setCode(e.target.value)}} label="Code" variant="outlined" />
                 </Grid>
                 <Grid item>
-                  <Button variant="contained">Submit</Button>
+                  <Button variant="contained" onClick={onSubmit}>Submit</Button>
                 </Grid>
               </Grid>
               {message}
